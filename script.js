@@ -104,11 +104,22 @@ const problems = [
 let currentProblem = 0;
 let score = 0;
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+}
+
 function displayProblem() {
     const problem = problems[currentProblem];
     document.getElementById("problem").innerHTML = `Find the antiderivative of: \\(${problem.function}\\)`;
 
-    const optionsHtml = problem.options.map((option) => `
+    // Shuffle options before displaying
+    const options = [...problem.options]; // Copy options
+    shuffleArray(options);
+
+    const optionsHtml = options.map((option) => `
         <div class="option" onclick="checkAnswer('${option.replace(/\\/g, '\\\\')}')">
             \\(${option}\\)
         </div>
